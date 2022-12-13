@@ -2,16 +2,18 @@ package pt.isec.gps.tp.utils;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 
 public class DataHora {
 
 
-    private String date;
+    private String date, time;
 
     public DataHora() {
         setDate("");
+        setTime();
         //this.date = "9/12/2022";
     }
 
@@ -21,6 +23,7 @@ public class DataHora {
         int diaI, mesI, anoI;
 
         if (dataAnterior.equals("")) {
+
             // OBTER A DATA DO SISTEMA
             LocalDate date = LocalDate.now();
 
@@ -48,23 +51,6 @@ public class DataHora {
             diaI++;
         }
 
-
-
-		/*
-		System.out.println(diaS + "-" + mesS + "-" + anoS);
-		System.out.println(diaI + "-" + mesI + "-" + anoI);
-
-		diaI = 29;
-		mesI = 2;
-		anoI = 2023;
-		*/
-		/*
-		diaI = 31;
-		mesI = 12;
-		anoI = 2022;
-		*/
-
-
         boolean encontrou = false;
 
         while (!encontrou) {
@@ -88,7 +74,6 @@ public class DataHora {
             LocalDate someDate = LocalDate.of(anoI, mesI, diaI); // 2nd-Jan-2021
 
             DayOfWeek day = DayOfWeek.of(someDate.get(ChronoField.DAY_OF_WEEK));
-
 
 
             if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY) {
@@ -125,9 +110,28 @@ public class DataHora {
 
     }
 
+    public void setTime() {
+        // OBTER A DATA DO SISTEMA
+        LocalTime time = LocalTime.now();
+
+        // SEPARAR O DIA, O M�S E O ANO DA DATA
+        DateTimeFormatter horaSyst = DateTimeFormatter.ofPattern("HH");
+        DateTimeFormatter minutoSyst = DateTimeFormatter.ofPattern("mm");
+
+        // CONVERTER OS DADOS DA DATA PARA STRING
+        String horaS = time.format(horaSyst);
+        String minutoS = time.format(minutoSyst);
+
+        // CONCATENAR AS 3 STRINGS PARA UMA STRING �NICA
+        String hora = horaS.concat(":").concat(minutoS);
+
+        this.time = hora;
+    }
+
     public String getDate(int aux) {
         switch (aux) {
             case 0 -> {
+                setDate("");
                 return date;
             }
             case 1 -> {
@@ -136,5 +140,11 @@ public class DataHora {
             }
         }
         return "";
+    }
+
+    public String getTime() {
+        setTime();
+
+        return time;
     }
 }

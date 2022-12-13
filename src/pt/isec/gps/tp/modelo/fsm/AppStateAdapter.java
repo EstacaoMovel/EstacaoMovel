@@ -1,6 +1,11 @@
 package pt.isec.gps.tp.modelo.fsm;
 
 import pt.isec.gps.tp.modelo.dados.AppData;
+import pt.isec.gps.tp.modelo.dados.Autocarro;
+import pt.isec.gps.tp.modelo.dados.Notificacao;
+import pt.isec.gps.tp.utils.CategoriaFiltro;
+
+import java.util.ArrayList;
 
 public class AppStateAdapter implements IAppState {
     AppContext context;
@@ -51,5 +56,15 @@ public class AppStateAdapter implements IAppState {
     @Override
     public void detalhesAutocarro() {
 
+    }
+
+    @Override
+    public ArrayList<Notificacao> getNotificacoes() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Autocarro> getAutocarrosFiltros(CategoriaFiltro filtro, String hora_chegada, String hora_destino, String origem, String destino) {
+        return null;
     }
 }

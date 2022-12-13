@@ -9,20 +9,32 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import pt.isec.gps.tp.utils.DataHora;
 import pt.isec.gps.tp.utils.UtilsUI;
 import pt.isec.gps.tp.modelo.AppManager;
 import pt.isec.gps.tp.modelo.fsm.AppState;
 
 public class InicioUI extends BorderPane {
 
-    AppManager appManager;
+    private AppManager appManager;
+    private DataHora dataHora = new DataHora();
 
-    private Line linha;
+    private Label horaSistema;
+    private HBox horaSistHBox;
+    Line linhaTop;
+    private VBox cimaVBox;
+
     private Label titulo;
-    private Button inicio;
+    private VBox tituloHBox;
 
-    private HBox linhaHBox;
-    private VBox principalVBox;
+    private Button inicio;
+    private HBox inicioHBox;
+
+    private Line linhaBottom;
+    private Label nomeEmpresaLabel;
+
+    private VBox principalTopVBox, principalBottomVBox;
+
 
     public InicioUI(AppManager appManager) {
         this.appManager = appManager;
@@ -31,6 +43,7 @@ public class InicioUI extends BorderPane {
         registerHandlers();
         update();
     }
+
 
     private void createViews() {
 
@@ -44,36 +57,61 @@ public class InicioUI extends BorderPane {
                 )
         );
 
-        linha = new Line(200, 20, 300, 200);
+        horaSistema = new Label("" + dataHora.getTime());
+        horaSistema.setFont( new Font("Sans Serif", 12) );
+        horaSistHBox = new HBox(horaSistema);
+        horaSistHBox.setPadding(new Insets(10, 0, 0, 10));
+        horaSistHBox.setAlignment(Pos.CENTER_LEFT);
 
+        linhaTop = new Line(0, 0, UtilsUI.appWidthSize, 0);
 
-        linhaHBox = new HBox();
-        linhaHBox.setPadding(new Insets(50, 0, 20, 0));
-        linhaHBox.getChildren().add(linha);
-
+        cimaVBox = new VBox(horaSistHBox, linhaTop);
+        cimaVBox.setAlignment(Pos.CENTER);
+        cimaVBox.setSpacing(50);
 
         titulo = new Label();
         titulo.setText("ESTAÇÃO MÓVEL");
-        titulo.setFont( new Font("Arial", 24) );
+        titulo.setFont( new Font("Times New Roman", 28) );
         titulo.setAlignment(Pos.CENTER);
 
+        tituloHBox = new VBox(titulo);
+        tituloHBox.setAlignment(Pos.CENTER);
 
-        inicio = new Button("Inicio");
 
-        principalVBox = new VBox();
-//        principalVBox.getChildren().add(linha);
-//        principalVBox.getChildren().addAll(titulo, inicio);
-        principalVBox.getChildren().add(linhaHBox);
-        principalVBox.getChildren().addAll(titulo, inicio);
-        principalVBox.setAlignment(Pos.TOP_CENTER);
+        inicio = new Button("Início");
+        inicio.setPadding(new Insets(0, 5, 0, 5));
+        inicio.setFont( new Font("Sans Serif", 24) );
+        inicioHBox = new HBox(inicio);
+        inicioHBox.setPadding(new Insets(30, 0, 50, 0));
+        inicioHBox.setAlignment(Pos.CENTER);
+
+        linhaBottom = new Line(0, 0, UtilsUI.appWidthSize, 0);
+
+        nomeEmpresaLabel = new Label("EstaçãoMóvelLDA");
+
+
+        principalTopVBox = new VBox();
+        principalTopVBox.getChildren().addAll(cimaVBox);
+        principalTopVBox.setAlignment(Pos.TOP_CENTER);
         //principalVBox.setPadding( new Insets(50, 0, 50, 0) );
-        //principalVBox.setSpacing(100);
-        principalVBox.setMinWidth(UtilsUI.appWidthSize);
-        principalVBox.setMaxWidth(UtilsUI.appWidthSize);
-        principalVBox.setMinHeight(UtilsUI.appHeightSize);
-        principalVBox.setMaxHeight(UtilsUI.appHeightSize);
+        /*principalTopVBox.setMinWidth(UtilsUI.appWidthSize);
+        principalTopVBox.setMaxWidth(UtilsUI.appWidthSize);*/
+        principalTopVBox.setMinHeight(UtilsUI.appHeightSize - 10*UtilsUI.appHeightSize);
+        principalTopVBox.setMaxHeight(UtilsUI.appHeightSize - 10*UtilsUI.appHeightSize);
 
-        this.setCenter(principalVBox);
+        principalBottomVBox = new VBox();
+        principalBottomVBox.getChildren().addAll(inicioHBox, linhaBottom, nomeEmpresaLabel);
+        principalBottomVBox.setAlignment(Pos.BOTTOM_CENTER);
+        principalBottomVBox.setPadding( new Insets(60, 0, 15, 0) );
+        principalBottomVBox.setSpacing(50);
+        /*principalBottomVBox.setMinWidth(UtilsUI.appWidthSize);
+        principalBottomVBox.setMaxWidth(UtilsUI.appWidthSize);*/
+        principalBottomVBox.setMinHeight(UtilsUI.appHeightSize - 90*UtilsUI.appHeightSize);
+        principalBottomVBox.setMaxHeight(UtilsUI.appHeightSize - 90*UtilsUI.appHeightSize);
+
+        this.setTop(principalTopVBox);
+        this.setCenter(tituloHBox);
+        this.setBottom(principalBottomVBox);
 
     }
 
@@ -94,6 +132,8 @@ public class InicioUI extends BorderPane {
             return;
         }
         this.setVisible(true);
+
+        horaSistema.setText(dataHora.getTime());
     }
 
 }

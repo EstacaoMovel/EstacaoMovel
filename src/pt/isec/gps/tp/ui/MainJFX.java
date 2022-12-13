@@ -30,4 +30,11 @@ public class MainJFX extends Application {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void stop() throws Exception {
+        appManager.escreveNotificacoes();
+        appManager.stopThread();
+        super.stop();
+    }
 }

@@ -21,6 +21,12 @@ public class DetalhesAutocarroState extends InicioState {
 
     @Override
     public void voltar() {
-        changeState(getLastState());
+        //changeState(getLastState());
+        changeState(AppState.AUTOCARROS_DISPONIVEIS_STATE);
+    }
+
+    @Override
+    public void notificacoes() {
+        changeState(AppState.NOTIFICACOES_STATE);
     }
 }

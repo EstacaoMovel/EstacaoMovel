@@ -31,7 +31,10 @@ public class RecolhaDadosState extends AppStateAdapter {
     }
 
     @Override
-    public void voltar() {
+    /*public void voltar() {
         changeState(getLastState());
+    }*/
+    public void voltar() {
+        changeState(AppState.INICIO_STATE);
     }
 }
